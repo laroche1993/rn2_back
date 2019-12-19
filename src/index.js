@@ -5,6 +5,7 @@ const mongoose = require('mongoose')
 //routes
 const user_routes = require("../src/routes/users_routes")
 const login = require('../src/routes/login')
+const cars = require('./routes/cars_router')
 
 
 //Database
@@ -36,6 +37,7 @@ app.use(express.json())
 //Routes
 app.use("/api/users",user_routes)
 app.use("/api/login",login)
+app.use("/api/cars",cars)
 
 //StaticFiles
 
