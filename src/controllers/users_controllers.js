@@ -28,16 +28,16 @@ const userController = {
             const { name, userName, password, rol } = req.body
             //verify if exist the user
             if (userName) {
-                const exist_user = await Users.findOne({ userName })
-                console.log(exist_user)
-                if (exist_user) {
+                const existUser = await Users.findOne({ userName })
+                console.log(existUser)
+                if (existUser) {
                     res.json("este usuario ya exite")
                 } else {
                     //save de new user                    
-                    const new_user = new Users({ name, userName, password, rol });
-                    new_user.password = await new_user.encryptPassword(password)
-                    console.log(new_user.password)
-                    await new_user.save()
+                    const newUser = new Users({ name, userName, password, rol });
+                    newUser.password = await newUser.encryptPassword(password)
+                    console.log(newUser.password)
+                    await newUser.save()
                     res.status(202).send()
                 }
             } else {
@@ -51,8 +51,29 @@ const userController = {
     },
     updateUser: async (req, res) => {
         try {
-            Users.findByIdAndUpdate(req.params.id, req.body)
-            res.status(202)
+            //get password parameters separately to precess them
+            const { name, userName, password, rol } = req.body
+            console.log(password)
+            //validate that no repit the same useName
+            if(userName){
+                const userExist = await Users.findOne({userName})                
+                if(!userExist){
+                    //object User for encrypt the password
+            const newUser = new Users({ name, userName, password, rol });
+            req.body.password = await newUser.encryptPassword(password)
+            Users.findByIdAndUpdate(req.params.id, req.body, (err) => {
+                if (err)
+                    console.log(err)
+                else {
+                    res.status(202).send()
+                }
+            })
+                }else{
+                    res.send("Ya existe este userName")
+                }
+            }
+            
+
         } catch (error) {
             res.status(203)
         }
