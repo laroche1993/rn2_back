@@ -6,8 +6,8 @@ const login = {
     loginUser: async (req, res, next) => {
 
         //verify if exist the user
-        const { user_name, password } = req.body
-        const user = await Users.findOne({ user_name })
+        const { userName, password } = req.body
+        const user = await Users.findOne({ userName })
         if (!user) {
             res.json({ mesage: "No existe el usuario" })
         } else {

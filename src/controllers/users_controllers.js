@@ -26,10 +26,11 @@ const userController = {
 
             //get all parameters separately to precess them
             const { name, userName, password, rol } = req.body
-            //verify if exist the user       
-            const exist_user = await Users.findOne({ userName })
-            console.log(exist_user)
-                if (exist_user) {                    
+            //verify if exist the user
+            if (userName) {
+                const exist_user = await Users.findOne({ userName })
+                console.log(exist_user)
+                if (exist_user) {
                     res.json("este usuario ya exite")
                 } else {
                     //save de new user                    
@@ -39,7 +40,11 @@ const userController = {
                     await new_user.save()
                     res.status(202).send()
                 }
-            
+            } else {
+                res.json("Introducir el userName")
+            }
+
+
         } catch (error) {
             res.status(203)
         }
