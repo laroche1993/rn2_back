@@ -10,6 +10,7 @@ const userController = {
             res.json(users)
         } catch (error) {
             console.log(error)
+            res.status(500).send(error)
         }
     },
     getUserbyId: async (req, res) => {
@@ -17,7 +18,7 @@ const userController = {
             const user = await Users.findById(req.params.id)
             res.json(user)
         } catch (error) {
-            res.status(203)
+            res.status(500).send(error)
         }
 
     },
@@ -46,7 +47,7 @@ const userController = {
 
 
         } catch (error) {
-            res.status(203)
+            res.status(500).send(error)
         }
     },
     updateUser: async (req, res) => {
@@ -69,19 +70,19 @@ const userController = {
                 }
             })
                 }else{
-                    res.send("Ya existe este userName")
+                    res.status(400).json({mesage:"Ya existe este userName"})
                 }
             }
             
 
         } catch (error) {
-            res.status(203)
+            res.status(500).send(error)
         }
 
     },
     deleteUser: async (req, res) => {
         await Users.findByIdAndRemove(req.params.id)
-        res.send("user deleted")
+        res.status(200).json({mesage:"Usuario eliminado correctamente"})
 
     }
 }

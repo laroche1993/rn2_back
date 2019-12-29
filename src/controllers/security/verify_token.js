@@ -3,7 +3,7 @@ const verify={
 
 tokenVerify: (req,res,next)=>{
     if(!req.headers.authorization){
-        return res.status(403).json({message: "tu peticion no tiene cabecera"})
+        return res.status(403).json({message: "Peticion sin cabecera"})
     }else {
         var token1 = req.headers.authorization.split(' ')[1]
                
@@ -13,14 +13,14 @@ tokenVerify: (req,res,next)=>{
 
     jwt.verify(token1,process.env.JWT_WORLD,(err,tokenDecode)=>{
         if (err) {
-            res.json({mesage:"Error al verificar el token"})
+            res.status(401).json({mesage:"Error al verificar el token"})
         }else{
             console.log(tokenDecode)
             next()
         }
     })
 }else{
-    res.json({mesage: "No esxiste un token"})
+    res.status(400).json({mesage: "No esxiste un token"})
 } 
 }
 

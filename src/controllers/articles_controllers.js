@@ -15,27 +15,27 @@ const articlesControllers={
           const art  =   await Articles.findById(req.params.id).populate('user')
           res.json(art)
         } catch (error) {
-            console.log(error)             
+            res.status(500).send(error)          
         }
    },
     addArticles:async(req,res)=>{
         try {
             const {title,category,date,user} = req.body
             const article = new Articles({title,category,date,user})
-            res.send("llego el articulo")
+            res.status(200).json({mesage :"Articulo adicionado correctamente"})
             article.save()
         } catch (error) {
-            console.log(error)
+            res.status(500).send(error)
         }
     },
     updateArticles:async (req,res)=>{
         try {
           await Articles.findByIdAndUpdate(req.params.id,req.body,(err)=>{
               if(err){console.log(err)}
-              else{res.json("Articulos Actualizado")}
+              else{res.status(200).json({mesage:"Articulos Actualizado"})}
           })
         } catch (error) {
-            console.log(error)
+            res.status(500).send(error)
         }
        
 
@@ -46,11 +46,11 @@ const articlesControllers={
                 if(err){
                     console.log(err)
                 }else{
-                    res.json("Se ha eliminado el articulo")
+                    res.status(200).json({mesage:"Se ha eliminado el articulo"})
                 }
             })
         } catch (error) {
-            
+            res.status(500).send(error)
         }
     }
 }

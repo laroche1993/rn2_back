@@ -14,19 +14,19 @@ const queryById  = "SELECT autos.id,autos.created_at,autos.updated_at,autos.capa
 const Cars = {
     getCars: async (req, res) => {
         try {        
-            const estudiante =  await pool.query(query);
-            res.json(estudiante.rows)
+            const cars =  await pool.query(query);
+            res.json(cars.rows)
          } catch (error) {
-             console.log(error)
+            res.status(500).send(error)
          }
     },
 
     getCarsById:async (req,res)=>{
         try {
-            const estudiante =  await pool.query(queryById +'WHERE autos.id ='+req.params.id);
-            res.json(estudiante.rows)
+            const car =  await pool.query(queryById +'WHERE autos.id ='+req.params.id);
+            res.json(car.rows)
         } catch (error) {
-            
+             res.status(500).send(error)
         }
     }
 }
