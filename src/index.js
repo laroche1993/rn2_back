@@ -2,6 +2,7 @@ require('dotenv').config()
 const express = require('express')
 const app = express()
 const mongoose = require('mongoose')
+const cors = require('cors')
 //routes
 const user_routes = require("../src/routes/users_routes")
 const login = require('../src/routes/login')
@@ -34,7 +35,7 @@ app.set("port", process.env.PORT || 3000)
 
 //Midelwares
 app.use(express.json())
-
+app.use(cors())
 //Routes
 app.use("/api/users",user_routes)
 app.use("/api/login",login)
