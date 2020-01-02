@@ -1,5 +1,6 @@
 const Users = require('../../models/users_model')
 const jwt = require('jsonwebtoken')
+const moment = require('moment')
 
 const login = {
 
@@ -18,12 +19,17 @@ const login = {
                 res.json({ mesage: "Contraseña incorrecta" })
             } else {
                 //create token
-                const userSend = {
-                    name: user.name,
-                    userName: user.userName,
-                    rol: user.rol
+                const payload = {
+                    username:{name: user.name,
+                        userName: user.userName,
+                        rol: user.rol},
+                        tokenInfo:{
+                            init:moment().format(),
+                            exp:moment().add(14,'days') 
+                        }
+                    
                 }
-                const token = jwt.sign({ userSend }, process.env.JWT_WORLD)
+                const token = jwt.sign({ payload }, process.env.JWT_WORLD)
                 res.json({ mesage: "Usuario logeado con exito", token })
             }
         }
