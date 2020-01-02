@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const { Schema } = mongoose
 const user = mongoose.model('Users')
+const moment  =require('moment')
 
 const articles = new Schema(
     {
@@ -8,7 +9,7 @@ const articles = new Schema(
         category: String,
         date:{
             type:Date,
-            default:Date.now
+            default:moment().format()
         },
         user:{
             type:Schema.Types.ObjectId,
