@@ -7,17 +7,23 @@ const SendMail = {
     sendMail: async (req, res, next) => {
         console.log(config.emailConfig.auth.user)
         const configurationTransport = config.emailConfig
+        console.log(configurationTransport)
         //Create transporter nodemailer with the configuration from config file
-        const transporter = nodemailer.createTransport({ configurationTransport })
+        const transporter = nodemailer.createTransport({
+            service: "Gmail",
+            auth:{
+                user:"luisangelrochebroche@gmail.com",
+                pass:"Eneidateamo"
+            }
+        })
         
         //send email whith the user info
         try {
             const info = await transporter.sendMail({
-                from: config.emailConfig.auth.user,
-                to: req.body.email,
+                from: "luisangelrochebroche@gmail.com",
+                to: "luisangelrochebroche@gmail.com",
                 subject: 'Comprar autos',
-                text: req.body.body,
-                html='<h1> COmpra de autos</h1>'
+                text: req.body.body
             })
             console.log(info)
         } catch (error) {

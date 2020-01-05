@@ -3,9 +3,11 @@ const env = process.env.NODE_ENV
 
 const dev = {
     emailConfig: {
-        service: 'gmail',
+        host: 'smtp.gmail.com',
+        port:465,
+        secure:true,
         auth: {
-            user: 'luisangelrochebroche@gmail.com',
+            user: process.env.USER_EMAIL,
             pass: process.env.PASS_EMAIL
         }
     }
@@ -14,7 +16,9 @@ const dev = {
 
 const prd = {
     emailConfig: {
-        service: process.env.SERVICE_MAIL,
+        host: 'smtp.gmail.com',
+        port:465,
+        secure:true,
         auth: {
             user: process.env.USER_EMAIL,
             pass: process.env.PASS_EMAIL
