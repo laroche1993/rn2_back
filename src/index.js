@@ -8,6 +8,7 @@ const user_routes = require("../src/routes/users_routes")
 const login = require('../src/routes/login')
 const cars = require('./routes/cars_router')
 const articles = require('./routes/articles_routes')
+const comprarAutos = require('./routes/comprar_autos')
 
 
 //Database
@@ -41,6 +42,7 @@ app.use("/api/users",user_routes)
 app.use("/api/login",login)
 app.use("/api/cars",cars)
 app.use("/api/articles",articles)
+app.use('/api/comprarAutos',comprarAutos)
 
 //StaticFiles
 
