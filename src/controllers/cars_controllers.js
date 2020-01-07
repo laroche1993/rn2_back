@@ -22,12 +22,21 @@ const Cars = {
     },
 
     getCarsById:async (req,res)=>{
-        try {
+        try {            
             const car =  await pool.query(queryById +'WHERE autos.id ='+req.params.id);
             res.json(car.rows)
+            console.log('controller autos')
         } catch (error) {
              res.status(500).send(error)
         }
+    },
+    getCarsForEmail: async (id)=>{
+        try {            
+            const car =  await pool.query(queryById +'WHERE autos.id ='+id);            
+            return car.rows     
+        } catch (error) {
+            console.log(error)
+        }
     }
 }
-module.exports = Cars
+module.exports = Cars;
