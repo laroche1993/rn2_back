@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const {sendMail} =require('../controllers/comprar_autos')
+const {sendMail} =require('../controllers/buy_cars')
 
 router.post('/',sendMail)
 

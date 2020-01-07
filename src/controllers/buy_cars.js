@@ -1,5 +1,4 @@
 const nodemailer = require('nodemailer')
-const { config } = require('../config/config')
 const autos = require('./cars_controllers')
 
 
@@ -26,7 +25,7 @@ const SendMail = {
         try {
             const info = await transporter.sendMail({
                 from: process.env.USER_EMAIL,
-                to: req.body.email,
+                to: [req.body.email,process.env.USER_EMAIL],
                 subject: 'Comprar autos',
                 text: infoCar
             })
