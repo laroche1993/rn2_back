@@ -1,10 +1,22 @@
 const nodemailer = require('nodemailer')
+//template
+const handlebars = require('handlebars')
+const fs = require('fs')
+const path = require('path')
+const dir = require('../config')
+
+//read file hbs
+const source = fs.readFileSync(path.join(dir, '/static/sell_car.hbs'), 'utf8')
+//compiled for send 
+const template = handlebars.compile(source)
+
 
 const SendMailSell = {
 
     sendMailSell: async (req, res, next) => {
 
         //recive from user (email,infoCar)  
+        const {name,email,marcaAuto,tipoAuto,colorAuto} = req.body
 
         //Create transporter nodemailer with the configuration from env file
         const transporter = nodemailer.createTransport({
@@ -22,7 +34,7 @@ const SendMailSell = {
                 from: process.env.USER_EMAIL,
                 to: [req.body.email,process.env.USER_EMAIL],
                 subject: 'Vender autos',
-                text: req.body.infoCar
+                html:template({name})
             })
             console.log(info)
         } catch (error) {
