@@ -55,25 +55,25 @@ const userController = {
             //get password parameters separately to precess them
             const { name, userName, password, rol } = req.body
             console.log(password)
-            //validate that no repit the same useName
-            if(userName){
-                const userExist = await Users.findOne({userName})                
-                if(!userExist){
-                    //object User for encrypt the password
-            const newUser = new Users({ name, userName, password, rol });
-            req.body.password = await newUser.encryptPassword(password)
-            Users.findByIdAndUpdate(req.params.id, req.body, (err) => {
-                if (err)
-                    console.log(err)
-                else {
-                    res.status(202).send()
-                }
-            })
-                }else{
-                    res.status(400).json({mesage:"Ya existe este userName"})
+            //validate that exist the user
+            if (userName) {
+                const userExist = await Users.findOne({ userName })
+                if (userExist) {
+                    //object User for encrypt the password                    
+                    const newUser = new Users({ name, userName, password, rol });
+                    req.body.password = await newUser.encryptPassword(password)
+                    Users.findByIdAndUpdate(req.params.id, req.body, (err) => {
+                        if (err)
+                            console.log(err)
+                        else {
+                            res.status(202).send()
+                        }
+                    })
+                } else {
+                    res.status(400).json({ mesage: "No existe este usuario" })
                 }
             }
-            
+
 
         } catch (error) {
             res.status(500).send(error)
@@ -82,8 +82,38 @@ const userController = {
     },
     deleteUser: async (req, res) => {
         await Users.findByIdAndRemove(req.params.id)
-        res.status(200).json({mesage:"Usuario eliminado correctamente"})
+        res.status(200).json({ mesage: "Usuario eliminado correctamente" })
 
+    },
+    updatePassword: async (req, res) => {
+        try {
+            //get password parameters separately to precess them
+            const { name, userName, password, rol } = req.body
+            const newRol = rol
+            //validate that exist the user
+            if (userName) {
+                const userExist = await Users.findOne({ userName })
+                if (userExist) {
+                    //object User for encrypt the password 
+                    console.log(userExist)
+                    const newUser = new Users({ name, userName, password, rol });
+                    req.body.password = await newUser.encryptPassword(password)
+                    Users.findOneAndUpdate(req.params.id, { password: req.body.password }, { new: true }, (err) => {
+                        if (err)
+                            console.log(err)
+                        else {
+                            res.status(202).send()
+                        }
+                    })
+                } else {
+                    res.status(400).json({ mesage: "No existe este usuario" })
+                }
+            }
+
+
+        } catch (error) {
+            res.status(500).send(error)
+        }
     }
 }
 module.exports = userController;
