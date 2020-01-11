@@ -72,7 +72,7 @@
                                 <tr>
                                     <td align="left" style="font-size:0px;padding:0px 25px 0px 25px;padding-top:0px;padding-right:50px;padding-bottom:0px;padding-left:50px;word-break:break-word;">
                                         <div style="font-family:Open Sans, Helvetica, Arial, sans-serif;font-size:13px;line-height:22px;text-align:left;color:#797e82;">
-                                            <h1 style="text-align:center; color: #000000; line-height:32px">Hi {{name}}
+                                            <h1 style="text-align:center; color: #000000; line-height:32px">Hola {{user.name}}
                                     </h1>
                                         </div>
                                     </td>
@@ -80,13 +80,14 @@
                                 <tr>
                                     <td align="left" style="font-size:0px;padding:0px 25px 0px 25px;padding-top:0px;padding-right:50px;padding-bottom:0px;padding-left:50px;word-break:break-word;">
                                         <div style="font-family:Open Sans, Helvetica, Arial, sans-serif;font-size:13px;line-height:22px;text-align:left;color:#797e82;">
-                                            <p style="margin: 10px 0; text-align: center;">Luis Angel has invited
-                                                you to join a account.&nbsp;</p>
-                                            <p style="margin: 10px 0; text-align: center;">Click the button below to
-                                                accept the invitation and login. If you&rsquo;re having trouble, please
-                                                contact our support team.</p>
+                                            <p style="margin: 10px 0; text-align: center;">Gracias por contactar con nosotros para la venta de su auto.&nbsp;</p>
+                                            <p style="margin: 10px 0; text-align: center;">Los datos de su auto son los siguentes</p>
 
-                                                <p style="margin: 10px 0; text-align: center;">Marca:  <span class="conten-span">Audi</span></p>
+                                                <p style="margin: 10px 0; text-align: center;">Marca:  <span class="conten-span">{{auto.marca}}</span></p>
+                                                <p style="margin: 10px 0; text-align: center;">Modelo:  <span class="conten-span">{{auto.model}}</span></p>
+                                                <p style="margin: 10px 0; text-align: center;">Version:  <span class="conten-span">{{auto.version}}</span></p>
+                                                <p style="margin: 10px 0; text-align: center;">Color:  <span class="conten-span">{{auto.color}}</span></p>
+                                                <p style="margin: 10px 0; text-align: center;">Kms recorridos:  <span class="conten-span">{{auto.kms}}</span></p>
     
                                         </div>
                                     </td>

@@ -18,7 +18,7 @@ const SendMail = {
         //get the car and user info
         const getInfoCars = await autos.getCarsForEmail(req.body.carId)
         const infoCars = getInfoCars[0]
-        const nameUser = req.body.name
+        const infoUser = req.body
 
         //Create transporter nodemailer with the configuration from env file
         const transporter = nodemailer.createTransport({
@@ -36,7 +36,7 @@ const SendMail = {
                 from: process.env.USER_EMAIL,
                 to: [req.body.email, process.env.USER_EMAIL],
                 subject: 'Comprar autos',
-                html: template({ nameUser })
+                html: template({ infoUser,infoCars })
             }, (err) => {
                 console.log(err)
                 res.status(500).send(err)

@@ -16,7 +16,8 @@ const SendMailSell = {
     sendMailSell: async (req, res, next) => {
 
         //recive from user (email,infoCar)  
-        const {name,email,marcaAuto,tipoAuto,colorAuto} = req.body
+        const {user,auto} = req.body
+        console.log(user.name,auto.year)
 
         //Create transporter nodemailer with the configuration from env file
         const transporter = nodemailer.createTransport({
@@ -34,7 +35,7 @@ const SendMailSell = {
                 from: process.env.USER_EMAIL,
                 to: [req.body.email,process.env.USER_EMAIL],
                 subject: 'Vender autos',
-                html:template({name})
+                html:template({user,auto})
             })
             console.log(info)
         } catch (error) {
@@ -42,6 +43,7 @@ const SendMailSell = {
             res.status(500).send(error)
         }
 
+        console.log("se ejecuta despues de enviar el mensaje")
 
 
     }
