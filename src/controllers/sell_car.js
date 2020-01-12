@@ -33,8 +33,21 @@ const SendMailSell = {
         try {
             const info = await transporter.sendMail({
                 from: process.env.USER_EMAIL,
-                to: [req.body.email,process.env.USER_EMAIL],
+                to: process.env.USER_EMAIL,
                 subject: 'Vender autos',
+                html:template({user,auto})
+            })
+            console.log(info)
+        } catch (error) {
+            console.log(error)
+            res.status(500).send(error)
+        }
+//Sending other email to the employed of the company with other info
+        try {
+            const info = await transporter.sendMail({
+                from: process.env.USER_EMAIL,
+                to: process.env.USER_EMAIL,
+                subject: 'Vender autos copia al jefe',
                 html:template({user,auto})
             })
             console.log(info)
