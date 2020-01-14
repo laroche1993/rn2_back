@@ -20,7 +20,7 @@ tokenVerify: (req,res,next)=>{
         }
     })
 }else{
-    res.status(400).json({mesage: "No esxiste un token"})
+    res.status(400).json({mesage: "No existe un token"})
 } 
 }
 
