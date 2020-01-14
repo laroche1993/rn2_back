@@ -37,6 +37,34 @@ const Cars = {
         } catch (error) {
             console.log(error)
         }
-    }    
+    },
+
+    
+    carsFilter: async(req,res,next)=>{
+        let {marca,anno,modelo} = req.body
+        let filterByMarca = query + "WHERE"
+        let count = 0
+        if (marca) {
+            filterByMarca = filterByMarca + 'marcasautos.nombremarca ='`${marca}`
+            count = count + 1
+        }if (anno) {
+            if (count > 0) {
+                filterByMarca = filterByMarca + "AND"
+            }
+            filterByMarca = filterByMarca + 'versionesautos.anno ='`${anno}`
+            count = count + 1
+        }if (modelo) {
+            if (count > 0) {
+                filterByMarca = filterByMarca + "AND"
+            }
+            filterByMarca = filterByMarca + 'modelosautos.nombremodeloauto ='`${modelo}`
+        }
+        try {            
+            const cars =  await pool.query(filterByMarca);            
+            res.json(cars.rows) 
+        } catch (error) {
+            res.status(500).send(error)
+        }
+    }
 }
 module.exports = Cars;
