@@ -1,9 +1,12 @@
 const expess  = require('express')
 const router = expess.Router()
 
-const {getCars,getCarsById} = require('../controllers/cars_controllers')
+const {getCars,getCarsById,getFiltersParams} = require('../controllers/cars_controllers')
 
-router.get('/',getCars)
+router.get('/getFilters',getFiltersParams)
 router.get('/:id',getCarsById)
+router.get('/',getCars)
+
+
 
 module.exports = router

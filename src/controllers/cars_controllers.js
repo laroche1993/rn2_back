@@ -50,30 +50,52 @@ const Cars = {
 
     //filter by marc,year and model
     carsFilter: async (req, res, next) => {
-        let { marca, anno, modelo } = req.body
-        let filterByMarca = query + "WHERE"
+        let { marca, anno, color } = req.body
+        let filterBy = query + "WHERE"
         let count = 0
         if (marca) {
-            filterByMarca = filterByMarca + 'marcasautos.nombremarca ='`${marca}`
+            filterBy = filterBy + 'marcasautos.nombremarca ='`${marca}`
             count = count + 1
         } if (anno) {
             if (count > 0) {
-                filterByMarca = filterByMarca + "AND"
+                filterBy = filterBy + "AND"
             }
-            filterByMarca = filterByMarca + 'versionesautos.anno ='`${anno}`
+            filterBy = filterBy + 'versionesautos.anno ='`${anno}`
             count = count + 1
-        } if (modelo) {
+        } if (color) {
             if (count > 0) {
-                filterByMarca = filterByMarca + "AND"
+                filterBy = filterBy + "AND"
             }
-            filterByMarca = filterByMarca + 'modelosautos.nombremodeloauto ='`${modelo}`
+            filterBy = filterBy + 'coloresautos.nombrecolorauto ='`${color}`
         }
         try {
-            const cars = await pool.query(filterByMarca);
+            const cars = await pool.query(filterBy);
             res.json(cars.rows)
         } catch (error) {
             res.status(500).send(error)
         }
+    },
+    //get params for filters
+    getFiltersParams: async (req,res)=>{
+       console.log("i am here")
+       try {
+           
+        let marca = await pool.query("SELECT marcasautos.nombremarca FROM  marcasautos GROUP BY marcasautos.nombremarca")
+        let color = await pool.query("SELECT coloresautos.nombrecolorauto FROM  coloresautos GROUP BY coloresautos.nombrecolorauto")
+        let anno = await pool.query("SELECT versionesautos.anno FROM  versionesautos GROUP BY versionesautos.anno")
+        marca = marca.rows
+        color = color.rows
+        anno = anno.rows
+        const send  = {
+            marca,
+            color,
+            anno          
+        }
+        console.log(send)
+        res.json(send)
+       } catch (error) {
+        res.status(500).send(error)
+       }
     }
 }
 module.exports = Cars;
