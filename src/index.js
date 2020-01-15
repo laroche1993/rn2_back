@@ -11,6 +11,7 @@ const articles = require('./routes/articles_routes')
 const buyCar = require('./routes/buy_cars_routes')
 const sellCar = require('./routes/sell_car_routes')
 const pawnCar = require('./routes/pawn_car_routes')
+const configuration = require('./routes/config_routes')
 
 
 //Database
@@ -47,6 +48,7 @@ app.use("/api/articles",articles)
 app.use('/api/buyCar',buyCar)
 app.use('/api/sellCar',sellCar)
 app.use('/api/pawnCar',pawnCar)
+app.use('/api/configuration',configuration)
 
 //StaticFiles
 

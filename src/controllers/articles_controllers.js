@@ -22,8 +22,9 @@ const articlesControllers={
         try {
             const {title,category,date,user} = req.body
             const article = new Articles({title,category,date,user})
-            res.status(200).json({mesage :"Articulo adicionado correctamente"})
             article.save()
+            res.status(200).json({mesage :"Articulo adicionado correctamente"})
+            
         } catch (error) {
             res.status(500).send(error)
         }
