@@ -8,21 +8,30 @@ const pool = new Pool({
     port: process.env.PG_PORT
 })
 
-const query = "SELECT autos.id,autos.created_at,autos.updated_at,autos.capacidadpasajero,autos.kmventas,autos.aire,coloresautos.nombrecolorauto,versionesautos.nombreversionauto,versionesautos.anno,versionesautos.cantidadpuerta,marcasautos.nombremarca,modelosautos.nombremodeloauto,nivelescombustiblesautos.nivelcombustiblevalor FROM public.autos JOIN public.coloresautos ON (autos.colorauto_id = coloresautos.id) JOIN versionesautos ON (autos.versionauto_id=versionesautos.id) JOIN public.modelosautos ON (versionesautos.modeloauto_id=modelosautos.id) LEFT JOIN public.nivelescombustiblesautos ON (autos.nivelcombustiblellegada_id=nivelescombustiblesautos.id) JOIN marcasautos ON(modelosautos.marcaauto_id=marcasautos.id)"
+let query = "SELECT autos.id,autos.created_at,autos.updated_at,autos.capacidadpasajero,autos.kmventas,autos.aire,coloresautos.nombrecolorauto,versionesautos.nombreversionauto,versionesautos.anno,versionesautos.cantidadpuerta,marcasautos.nombremarca,modelosautos.nombremodeloauto,nivelescombustiblesautos.nivelcombustiblevalor FROM public.autos JOIN public.coloresautos ON (autos.colorauto_id = coloresautos.id) JOIN versionesautos ON (autos.versionauto_id=versionesautos.id) JOIN public.modelosautos ON (versionesautos.modeloauto_id=modelosautos.id) LEFT JOIN public.nivelescombustiblesautos ON (autos.nivelcombustiblellegada_id=nivelescombustiblesautos.id) JOIN marcasautos ON(modelosautos.marcaauto_id=marcasautos.id)"
 const queryById = "SELECT autos.id,autos.created_at,autos.updated_at,autos.capacidadpasajero,autos.kmventas,autos.aire,coloresautos.nombrecolorauto,versionesautos.nombreversionauto,versionesautos.anno,versionesautos.cantidadpuerta,marcasautos.nombremarca,modelosautos.nombremodeloauto,nivelescombustiblesautos.nivelcombustiblevalor FROM public.autos JOIN public.coloresautos ON (autos.colorauto_id = coloresautos.id) JOIN versionesautos ON (autos.versionauto_id=versionesautos.id) JOIN public.modelosautos ON (versionesautos.modeloauto_id=modelosautos.id) LEFT JOIN public.nivelescombustiblesautos ON (autos.nivelcombustiblellegada_id=nivelescombustiblesautos.id) JOIN marcasautos ON(modelosautos.marcaauto_id=marcasautos.id)"
 
 const Cars = {
     getCars: async (req, res) => {
         try {
             let { page, amount } = req.body
-
-            if (page == 0) {
-                page = 1
+            
+            let offset = null
+            
+            if(page && amount){
+                if (page == 0) {
+                    page = 1
+                }
+                offset = page * amount - amount
+                
+                query = query + `LIMIT ${amount} OFFSET ${offset} `
+                
             }
 
-            const offset = page * amount - amount
 
-            const cars = await pool.query(query + `LIMIT ${amount} OFFSET ${offset} `);
+            
+
+            const cars = await pool.query(query);
             res.json(cars.rows)
         } catch (error) {
             res.status(500).send(error)
@@ -51,22 +60,25 @@ const Cars = {
     //filter by marc,year and model
     carsFilter: async (req, res, next) => {
         let { marca, anno, color } = req.body
-        let filterBy = query + "WHERE"
+        
+        let filterBy = query + " WHERE"
         let count = 0
-        if (marca) {
-            filterBy = filterBy + 'marcasautos.nombremarca ='`${marca}`
+        if (marca) {            
+            filterBy = filterBy + ` marcasautos.nombremarca = '${marca}'`
             count = count + 1
+            
         } if (anno) {
             if (count > 0) {
                 filterBy = filterBy + "AND"
             }
-            filterBy = filterBy + 'versionesautos.anno ='`${anno}`
+            filterBy = filterBy + ` versionesautos.anno = '${anno}'`
             count = count + 1
         } if (color) {
             if (count > 0) {
                 filterBy = filterBy + "AND"
             }
-            filterBy = filterBy + 'coloresautos.nombrecolorauto ='`${color}`
+            filterBy = filterBy + ` coloresautos.nombrecolorauto = '${color}'`
+            console.log("por aki paso",filterBy,count)
         }
         try {
             const cars = await pool.query(filterBy);
