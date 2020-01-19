@@ -14,6 +14,7 @@ const queryById = "SELECT autos.id,autos.created_at,autos.updated_at,autos.capac
 const Cars = {
     getCars: async (req, res) => {
         try {
+            //if send a range define a limit and a offset for filters
             let { page, amount } = req.body
             
             let offset = null
@@ -27,11 +28,24 @@ const Cars = {
                 query = query + `LIMIT ${amount} OFFSET ${offset} `
                 
             }
-
-
-            
-
+            //get all cars
             const cars = await pool.query(query);
+            //get all tramites for one car
+            for (let index = 0; index < cars.rows.length; index++) {
+                const element = cars.rows[index].id;
+                console.log(element)
+                let queryTramites = `SELECT tramites.numerotramite,tramites.created_at from public.tramites where tramites.auto_id = ${element}`
+                let getTramites = await pool.query(queryTramites)
+                let carsTramites = cars.rows[index]
+                let go = {}
+                let tramites = []                
+                for (let index = 0; index < getTramites.rows.length; index++) {                   
+                    tramites.push(getTramites.rows[index])
+                    go = {tramites}
+                }
+                //add a new field
+                console.log(Object.assign(carsTramites,go))
+            }
             res.json(cars.rows)
         } catch (error) {
             res.status(500).send(error)
