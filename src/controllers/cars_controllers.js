@@ -29,14 +29,15 @@ const Cars = {
                 
             }
             //get all cars
-            const cars = await pool.query(query);
+            const cars1 = await pool.query(query);
+           
             //get all tramites for one car
-            for (let index = 0; index < cars.rows.length; index++) {
-                const element = cars.rows[index].id;
-                console.log(element)
+            for (let index = 0; index < cars1.rows.length; index++) {
+                const element = cars1.rows[index].id;
+                console.log(element)                  
                 let queryTramites = `SELECT tramites.numerotramite,tramites.created_at from public.tramites where tramites.auto_id = ${element}`
                 let getTramites = await pool.query(queryTramites)
-                let carsTramites = cars.rows[index]
+                let carsTramites = cars1.rows[index]         
                 let go = {}
                 let tramites = []                
                 for (let index = 0; index < getTramites.rows.length; index++) {                   
@@ -44,9 +45,28 @@ const Cars = {
                     go = {tramites}
                 }
                 //add a new field
-                console.log(Object.assign(carsTramites,go))
+                Object.assign(carsTramites,go)
             }
-            res.json(cars.rows)
+           
+            // get all nombredocumento and nombrereferencial from documento table 
+            for (let index = 0; index < cars1.rows.length; index++) {
+                const element = cars1.rows[index].id;               
+                let queryImages = `SELECT nombredocumento,nombrereferencial FROM public.fotosautos JOIN public.documentos ON (fotosautos.documento_id = documentos.id) WHERE fotosautos.auto_id = ${element}`
+                let getImages = await pool.query(queryImages)
+                let carsImages = cars1.rows[index]                
+                let go2 = {}
+                let images = []                
+                for (let index = 0; index < getImages.rows.length; index++) {                   
+                    images.push(getImages.rows[index])
+                    go2 = {images}
+                }
+                //add a new field
+               Object.assign(carsImages,go2)              
+                
+            }
+            //Ask
+
+            res.json(cars1.rows)
         } catch (error) {
             res.status(500).send(error)
         }
