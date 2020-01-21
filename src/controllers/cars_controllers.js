@@ -16,61 +16,61 @@ const Cars = {
         try {
             //if send a range define a limit and a offset for filters
             let { page, amount } = req.body
-            
+
             let offset = null
-            
-            if(page && amount){
+
+            if (page && amount) {
                 if (page == 0) {
                     page = 1
                 }
                 offset = page * amount - amount
-                
+
                 query = query + `LIMIT ${amount} OFFSET ${offset} `
-                
+
             }
             //get all cars
+
+
+
             const cars1 = await pool.query(query);
-           
-            //get all tramites for one car
-            for (let index = 0; index < cars1.rows.length; index++) {
-                const element = cars1.rows[index].id;
-                console.log(element)                  
+            let copyCars = { ...cars1 }
+            let h
+            let x = []
+
+            //get all url images for a car
+            for (let index = 0; index < copyCars.rows.length; index++) {
+                const element = copyCars.rows[index].id;
+                //query tramites for a car
                 let queryTramites = `SELECT tramites.numerotramite,tramites.created_at from public.tramites where tramites.auto_id = ${element}`
-                let getTramites = await pool.query(queryTramites)
-                let carsTramites = cars1.rows[index]         
-                let go = {}
-                let tramites = []                
-                for (let index = 0; index < getTramites.rows.length; index++) {                   
-                    tramites.push(getTramites.rows[index])
-                    go = {tramites}
-                }
-                //add a new field
-                Object.assign(carsTramites,go)
-            }
-           
-            // get all nombredocumento and nombrereferencial from documento table 
-            for (let index = 0; index < cars1.rows.length; index++) {
-                const element = cars1.rows[index].id;               
+                let getTramites = await pool.query(queryTramites);
+                //query images for a car
                 let queryImages = `SELECT nombredocumento,nombrereferencial FROM public.fotosautos JOIN public.documentos ON (fotosautos.documento_id = documentos.id) WHERE fotosautos.auto_id = ${element}`
                 let getImages = await pool.query(queryImages)
-                let carsImages = cars1.rows[index]                
-                let go2 = {}
-                let images = []                
-                for (let index = 0; index < getImages.rows.length; index++) {                   
-                    images.push(getImages.rows[index])
-                    go2 = {images}
+                //get a copy from cars
+                let cars = { ...copyCars.rows[index] }
+                let UrlImagesAutos = []
+                for (let k = 0; k < getTramites.rows.length; k++) {
+                    const element = getTramites.rows[k];
+                    //get a year
+                    let year = new Date(element.created_at).getFullYear()
+                    let createUrl = `/${year}/TRAMITE-${element.numerotramite}/GALERIA/`
+                    //concat tramites with nombrereferencial images
+                    for (let l = 0; l < getImages.rows.length; l++) {
+                        const element1 = getImages.rows[l];
+                        createUrl = createUrl + `${element1.nombrereferencial}`
+                        UrlImagesAutos.push(createUrl)
+                    }
                 }
-                //add a new field
-               Object.assign(carsImages,go2)              
-                
+                const Urls = { UrlImagesAutos }
+                h = Object.assign(cars, Urls);
+                x.push(h)
             }
-            //Ask
-
-            res.json(cars1.rows)
+            res.json(x)
         } catch (error) {
             res.status(500).send(error)
         }
     },
+
 
     getCarsById: async (req, res) => {
         try {
@@ -94,13 +94,13 @@ const Cars = {
     //filter by marc,year and model
     carsFilter: async (req, res, next) => {
         let { marca, anno, color } = req.body
-        
+
         let filterBy = query + " WHERE"
         let count = 0
-        if (marca) {            
+        if (marca) {
             filterBy = filterBy + ` marcasautos.nombremarca = '${marca}'`
             count = count + 1
-            
+
         } if (anno) {
             if (count > 0) {
                 filterBy = filterBy + "AND"
@@ -112,7 +112,7 @@ const Cars = {
                 filterBy = filterBy + "AND"
             }
             filterBy = filterBy + ` coloresautos.nombrecolorauto = '${color}'`
-            console.log("por aki paso",filterBy,count)
+            console.log("por aki paso", filterBy, count)
         }
         try {
             const cars = await pool.query(filterBy);
@@ -122,26 +122,26 @@ const Cars = {
         }
     },
     //get params for filters
-    getFiltersParams: async (req,res)=>{
-       console.log("i am here")
-       try {
-           
-        let marca = await pool.query("SELECT marcasautos.nombremarca FROM  marcasautos GROUP BY marcasautos.nombremarca")
-        let color = await pool.query("SELECT coloresautos.nombrecolorauto FROM  coloresautos GROUP BY coloresautos.nombrecolorauto")
-        let anno = await pool.query("SELECT versionesautos.anno FROM  versionesautos GROUP BY versionesautos.anno")
-        marca = marca.rows
-        color = color.rows
-        anno = anno.rows
-        const send  = {
-            marca,
-            color,
-            anno          
+    getFiltersParams: async (req, res) => {
+        console.log("i am here")
+        try {
+
+            let marca = await pool.query("SELECT marcasautos.nombremarca FROM  marcasautos GROUP BY marcasautos.nombremarca")
+            let color = await pool.query("SELECT coloresautos.nombrecolorauto FROM  coloresautos GROUP BY coloresautos.nombrecolorauto")
+            let anno = await pool.query("SELECT versionesautos.anno FROM  versionesautos GROUP BY versionesautos.anno")
+            marca = marca.rows
+            color = color.rows
+            anno = anno.rows
+            const send = {
+                marca,
+                color,
+                anno
+            }
+            console.log(send)
+            res.json(send)
+        } catch (error) {
+            res.status(500).send(error)
         }
-        console.log(send)
-        res.json(send)
-       } catch (error) {
-        res.status(500).send(error)
-       }
     }
 }
 module.exports = Cars;
