@@ -1,34 +1,84 @@
 Estructura de la api
-Rutas
+Funcionalidades
 
-users 
-get (/api/users) CRUD
-Ruta privada
-Devuelve:{nombre,usuario,password,rol}
-put(/updatePassword/id)
+---------------------------------------------------------Autos--------------------------------------
+Se obtienen los autos por la ruta 
+GET localhost:4000/api/cars
+Devuelve un arreglo de autos con los siguientes datos
+"id": 352,
+        "created_at": "2019-12-23T09:17:55.667Z",
+        "updated_at": "2019-12-23T17:46:20.190Z",
+        "capacidadpasajero": 0,
+        "kmventas": 60000,
+        "aire": true,
+        "nombrecolorauto": "Negro",
+        "nombreversionauto": "2016 Serie Z (Linea anterior) - 2 pts. Z4 35is M Sport, 340 HP, TA",
+        "anno": 2016,
+        "cantidadpuerta": "2",
+        "nombremarca": "BMW",
+        "nombremodeloauto": "Serie Z",
+        "nivelcombustiblevalor": null,
+        "UrlImagesAutos": [
+            "/2019/TRAMITE-384/GALERIA/20190000010302.RN2.jpg",  --Una de estas rutas no existe--
+            "/2019/TRAMITE-388/GALERIA/20190000010302.RN2.jpg"
+        ]
+    },
+GET localhost:4000/api/cars/auto_id
+Devuelve un auto
+
+----------------------------------------------------Comprar autos--------------------------------------------
+POST localhost:4000/api/buyCar
+Recive 
+{
+    name
+    email
+    phon
+    carId
+    date ---fecha y hora de la cita--
+    place  --lugar de la cita, todavia por definir los lugares--
+    
+}
+
+Envia un correo al usuario y a la empresa(correo por definir) con los datos anteriores
+----------------------------------------------------Vender autos--------------------------------------------
+POST localhost:4000/api/sellCar
+Recive 
+{
+   user:{
+    name
+    email
+    phon
+   },
+   auto:{
+       marca,
+       model,
+       version,
+       color,
+       kms
+   }
+        
+    
+}
+Envia un correo al usuario y a la empresa(correo por definir) con los datos anteriores
+----------------------------------------------------Empeñar autos--------------------------------------------
+POST localhost:4000/api/pawnCar
+Recive 
+{
+   user:{
+    name
+    email
+    phon
+   },
+   auto:{
+       marca,
+       model,
+       version,
+       color,
+       kms
+   }
+        
+    
+}
+Envia un correo al usuario y a la empresa(correo por definir) con los datos anteriores
 
 
-cars
-get (api/cars) y get(api/cars/id)
-Ruta publica
-Devuelve: {fecha de creacion, fecha de actualizacion,capacidad de pasajeros,kilometros de venta, aire, color, version,año,cantidad de puertas,marca,modelo, nivel de combustible }
-
-
-
-articles
-get (/api/articles) CRUD
-Metodos get publicos
-Post,delete,put metodos privados
-Devuelve: {titulo,categoria,fecha de creacion,usuario}
-
-post(api/login)
-Publico
-Recive: {username,password}
-
-post(api/buy_car)
-Publica
-Recive {  infoUser{name, email, phon,day,hours}, carId }
-
-post(api/sellCar)
-Publica
-Recive {  user {name, email, phon }  auto{year,marca, model, version, color, kms, postalCode, carId }

@@ -8,7 +8,7 @@ const pool = new Pool({
     port: process.env.PG_PORT
 })
 
-let query = "SELECT autos.id,autos.created_at,autos.updated_at,autos.capacidadpasajero,autos.kmventas,autos.aire,coloresautos.nombrecolorauto,versionesautos.nombreversionauto,versionesautos.anno,versionesautos.cantidadpuerta,marcasautos.nombremarca,modelosautos.nombremodeloauto,nivelescombustiblesautos.nivelcombustiblevalor FROM public.autos JOIN public.coloresautos ON (autos.colorauto_id = coloresautos.id) JOIN versionesautos ON (autos.versionauto_id=versionesautos.id) JOIN public.modelosautos ON (versionesautos.modeloauto_id=modelosautos.id) LEFT JOIN public.nivelescombustiblesautos ON (autos.nivelcombustiblellegada_id=nivelescombustiblesautos.id) JOIN marcasautos ON(modelosautos.marcaauto_id=marcasautos.id)"
+let query = "SELECT autos.id,autos.created_at,autos.updated_at,autos.capacidadpasajero,autos.kmventas,autos.aire,coloresautos.nombrecolorauto,versionesautos.nombreversionauto,versionesautos.anno,versionesautos.cantidadpuerta,marcasautos.nombremarca,modelosautos.nombremodeloauto,nivelescombustiblesautos.nivelcombustiblevalor FROM public.autos JOIN public.coloresautos ON (autos.colorauto_id = coloresautos.id) JOIN versionesautos ON (autos.versionauto_id=versionesautos.id) JOIN public.modelosautos ON (versionesautos.modeloauto_id=modelosautos.id) LEFT JOIN public.nivelescombustiblesautos ON (autos.nivelcombustiblellegada_id=nivelescombustiblesautos.id) JOIN marcasautos ON(modelosautos.marcaauto_id=marcasautos.id)JOIN categoriasautos ON(categoriasautos.auto_id=autos.id)JOIN categorias ON(categoriasautos.categoria_id=categorias.id) WHERE categorias.nombrecategoria = 'Ventas'"
 const queryById = "SELECT autos.id,autos.created_at,autos.updated_at,autos.capacidadpasajero,autos.kmventas,autos.aire,coloresautos.nombrecolorauto,versionesautos.nombreversionauto,versionesautos.anno,versionesautos.cantidadpuerta,marcasautos.nombremarca,modelosautos.nombremodeloauto,nivelescombustiblesautos.nivelcombustiblevalor FROM public.autos JOIN public.coloresautos ON (autos.colorauto_id = coloresautos.id) JOIN versionesautos ON (autos.versionauto_id=versionesautos.id) JOIN public.modelosautos ON (versionesautos.modeloauto_id=modelosautos.id) LEFT JOIN public.nivelescombustiblesautos ON (autos.nivelcombustiblellegada_id=nivelescombustiblesautos.id) JOIN marcasautos ON(modelosautos.marcaauto_id=marcasautos.id)"
 
 const Cars = {
@@ -24,18 +24,13 @@ const Cars = {
                     page = 1
                 }
                 offset = page * amount - amount
-
                 query = query + `LIMIT ${amount} OFFSET ${offset} `
-
             }
             //get all cars
-
-
-
             const cars1 = await pool.query(query);
             let copyCars = { ...cars1 }
-            let h
-            let x = []
+            let carWithUrls
+            let send = []
 
             //get all url images for a car
             for (let index = 0; index < copyCars.rows.length; index++) {
@@ -62,10 +57,10 @@ const Cars = {
                     }
                 }
                 const Urls = { UrlImagesAutos }
-                h = Object.assign(cars, Urls);
-                x.push(h)
+                carWithUrls = Object.assign(cars, Urls);
+                send.push(carWithUrls)
             }
-            res.json(x)
+            res.json(send)
         } catch (error) {
             res.status(500).send(error)
         }
@@ -74,9 +69,40 @@ const Cars = {
 
     getCarsById: async (req, res) => {
         try {
-            const car = await pool.query(queryById + 'WHERE autos.id =' + req.params.id);
-            res.json(car.rows)
-            console.log('controller autos')
+            const car = await pool.query(queryById + 'AND autos.id =' + req.params.id);
+            let copyCars = { ...car }
+            let carWithUrls
+            let send = []
+
+            //get all url images for a car
+            for (let index = 0; index < copyCars.rows.length; index++) {
+                const element = copyCars.rows[index].id;
+                //query tramites for a car
+                let queryTramites = `SELECT tramites.numerotramite,tramites.created_at from public.tramites where tramites.auto_id = ${element}`
+                let getTramites = await pool.query(queryTramites);
+                //query images for a car
+                let queryImages = `SELECT nombredocumento,nombrereferencial FROM public.fotosautos JOIN public.documentos ON (fotosautos.documento_id = documentos.id) WHERE fotosautos.auto_id = ${element}`
+                let getImages = await pool.query(queryImages)
+                //get a copy from cars
+                let cars = { ...copyCars.rows[index] }
+                let UrlImagesAutos = []
+                for (let k = 0; k < getTramites.rows.length; k++) {
+                    const element = getTramites.rows[k];
+                    //get a year
+                    let year = new Date(element.created_at).getFullYear()
+                    let createUrl = `/${year}/TRAMITE-${element.numerotramite}/GALERIA/`
+                    //concat tramites with nombrereferencial images
+                    for (let l = 0; l < getImages.rows.length; l++) {
+                        const element1 = getImages.rows[l];
+                        createUrl = createUrl + `${element1.nombrereferencial}`
+                        UrlImagesAutos.push(createUrl)
+                    }
+                }
+                const Urls = { UrlImagesAutos }
+                carWithUrls = Object.assign(cars, Urls);
+                send.push(carWithUrls)
+            }
+            res.json(send)            
         } catch (error) {
             res.status(500).send(error)
         }
