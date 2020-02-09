@@ -3,6 +3,7 @@ const express = require('express')
 const app = express()
 const mongoose = require('mongoose')
 const cors = require('cors')
+const path = require('path')
 //routes
 const user_routes = require("../src/routes/users_routes")
 const login = require('../src/routes/login')
@@ -50,7 +51,15 @@ app.use('/api/sellCar',sellCar)
 app.use('/api/pawnCar',pawnCar)
 app.use('/api/configuration',configuration)
 
-//StaticFiles
+//static files
+
+
+const view = path.join(__dirname,"/public/cars2/dist")
+console.log(view)
+app.use(express.static(view))
+app.get("*",(req,res)=>{
+  res.sendFile(view+"/index.html")
+})
 
 //server
 app.listen(app.get("port"), () => {

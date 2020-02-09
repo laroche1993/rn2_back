@@ -58,7 +58,7 @@ const Cars = {
                         let urlImages = createUrl + `${element1.nombrereferencial}`
                          
                         UrlImagesAutos.push(urlImages)
-                        console.log(UrlImagesAutos)
+                        
                     }
                 }
                 const Urls = { UrlImagesAutos }
@@ -155,7 +155,7 @@ const Cars = {
                 filterBy = filterBy + "AND"
             }
             filterBy = filterBy + ` coloresautos.nombrecolorauto = '${color}'`
-            console.log("por aki paso", filterBy, count)
+            
         }
         try {
             const cars = await pool.query(filterBy);
@@ -180,7 +180,7 @@ const Cars = {
                 color,
                 anno
             }
-            console.log(send)
+            
             res.json(send)
         } catch (error) {
             res.status(500).send(error)
