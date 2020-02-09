@@ -13,6 +13,7 @@ const queryById = "SELECT autos.id,autos.created_at,autos.updated_at,autos.capac
 
 const Cars = {
     getCars: async (req, res) => {
+        
         try {
             //if send a range define a limit and a offset for filters
             let { page, amount } = req.body
@@ -31,6 +32,7 @@ const Cars = {
             let copyCars = { ...cars1 }
             let carWithUrls
             let send = []
+            let response = {}
 
             //get all url images for a car
             for (let index = 0; index < copyCars.rows.length; index++) {
@@ -52,15 +54,23 @@ const Cars = {
                     //concat tramites with nombrereferencial images
                     for (let l = 0; l < getImages.rows.length; l++) {
                         const element1 = getImages.rows[l];
-                        createUrl = createUrl + `${element1.nombrereferencial}`
-                        UrlImagesAutos.push(createUrl)
+                        
+                        let urlImages = createUrl + `${element1.nombrereferencial}`
+                         
+                        UrlImagesAutos.push(urlImages)
+                        console.log(UrlImagesAutos)
                     }
                 }
                 const Urls = { UrlImagesAutos }
                 carWithUrls = Object.assign(cars, Urls);
                 send.push(carWithUrls)
+
             }
-            res.json(send)
+            Object.assign(response,{
+                data:send,
+                status : 200
+            })
+            res.json(response)
         } catch (error) {
             res.status(500).send(error)
         }
@@ -68,11 +78,13 @@ const Cars = {
 
 
     getCarsById: async (req, res) => {
+        
         try {
             const car = await pool.query(queryById + 'AND autos.id =' + req.params.id);
             let copyCars = { ...car }
             let carWithUrls
             let send = []
+            let response = {}
 
             //get all url images for a car
             for (let index = 0; index < copyCars.rows.length; index++) {
@@ -102,7 +114,12 @@ const Cars = {
                 carWithUrls = Object.assign(cars, Urls);
                 send.push(carWithUrls)
             }
-            res.json(send)            
+            Object.assign(response,{
+                data:send,
+                status : 200
+            })
+            
+            res.json(response)            
         } catch (error) {
             res.status(500).send(error)
         }

@@ -16,8 +16,9 @@ const SendMailSell = {
     sendMailSell: async (req, res, next) => {
 
         //recive from user (email,infoCar)  
+        console.log(req.body)
         const {user,auto} = req.body
-        console.log(user.name,auto.year)
+        
 
         //Create transporter nodemailer with the configuration from env file
         const transporter = nodemailer.createTransport({
