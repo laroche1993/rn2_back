@@ -14,10 +14,11 @@ const template = handlebars.compile(source)
 const sendMailPawn = {
 
     sendMailPawn: async (req, res, next) => {
+        console.log('pawn car')
 
         //recive from user (email,infoCar)  
         const {user,auto} = req.body
-        console.log(user.name,auto.year)
+        //console.log(user.name,auto.year)
 
         //Create transporter nodemailer with the configuration from env file
         const transporter = nodemailer.createTransport({

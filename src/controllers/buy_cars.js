@@ -14,9 +14,19 @@ const template = handlebars.compile(source)
 const SendMail = {
 
     sendMail: async (req, res, next) => {
+        
         //recive from user (email,carId)
         //get the car and user info
-        const getInfoCars = await autos.getCarsForEmail(req.body.carId)
+        console.log(req.body)
+        let  getInfoCars
+        if (req.body.carId) {
+            getInfoCars = await autos.getCarsForEmail(req.body.carId)
+        }else{
+            res.status(500).send(error)
+        }
+       
+          
+        
         const infoCars = getInfoCars[0]
         const infoUser = req.body
 
