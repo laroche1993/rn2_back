@@ -37,6 +37,7 @@ connectDatabase()
 
 //Settings
 app.set("port", process.env.PORT || 3000)
+global.appRoot = path.resolve(__dirname)
 
 //Midelwares
 app.use(express.json())

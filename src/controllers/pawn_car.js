@@ -17,6 +17,7 @@ const sendMailPawn = {
         console.log('pawn car')
 
         //recive from user (email,infoCar)  
+        const image = req.file.path
         const {user,auto} = req.body
         //console.log(user.name,auto.year)
 
@@ -36,7 +37,7 @@ const sendMailPawn = {
                 from: process.env.USER_EMAIL,
                 to: process.env.USER_EMAIL,
                 subject: 'Vender autos',
-                html:template({user,auto})
+                html:template({user,auto,image})
             })
             console.log(info)
         } catch (error) {

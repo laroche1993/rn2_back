@@ -16,7 +16,7 @@ const SendMailSell = {
     sendMailSell: async (req, res, next) => {
 
         //recive from user (email,infoCar)  
-        console.log(req.body)
+        const image = req.file.path
         const {user,auto} = req.body
         
 
@@ -36,7 +36,7 @@ const SendMailSell = {
                 from: process.env.USER_EMAIL,
                 to: process.env.USER_EMAIL,
                 subject: 'Vender autos',
-                html:template({user,auto})
+                html:template({user,auto,image})
             })
             console.log(info)
         } catch (error) {

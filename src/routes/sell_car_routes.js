@@ -1,7 +1,9 @@
 const express = require('express')
 const router = express.Router()
 const {sendMailSell} = require('../controllers/sell_car')
+const multer = require('../controllers/images/multer_images')
 
-router.post('/',sendMailSell)
+
+router.post('/',multer.single('file'),sendMailSell)
 
 module.exports = router;
