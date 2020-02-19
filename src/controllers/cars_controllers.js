@@ -13,7 +13,10 @@ const queryById = "SELECT autos.id,autos.created_at,autos.updated_at,autos.capac
 
 const Cars = {
     getCars: async (req, res) => {
+<<<<<<< HEAD
 
+=======
+>>>>>>> e0c04ed059db84fa87f63204f2e1d30d3e4dad4c
         try {
             //if send a range define a limit and a offset for filters
             let { page, amount } = req.body
@@ -41,6 +44,10 @@ const Cars = {
             Object.assign(response, {
                 data: send,
                 status: 200
+<<<<<<< HEAD
+=======
+
+>>>>>>> e0c04ed059db84fa87f63204f2e1d30d3e4dad4c
             })
             res.json(response)
         } catch (error) {
@@ -50,7 +57,10 @@ const Cars = {
 
 
     getCarsById: async (req, res) => {
+<<<<<<< HEAD
 
+=======
+>>>>>>> e0c04ed059db84fa87f63204f2e1d30d3e4dad4c
         try {
             const car = await pool.query(queryById + 'AND autos.id =' + req.params.id);
             let copyCars = { ...car }
@@ -59,6 +69,10 @@ const Cars = {
             let response = {}
 
             //get all url images for a car
+<<<<<<< HEAD
+=======
+
+>>>>>>> e0c04ed059db84fa87f63204f2e1d30d3e4dad4c
             send = await Images.getImagesCars(copyCars)
             console.log(send)
             Object.assign(response, {
@@ -67,6 +81,10 @@ const Cars = {
             })
 
             res.json(response)
+<<<<<<< HEAD
+=======
+
+>>>>>>> e0c04ed059db84fa87f63204f2e1d30d3e4dad4c
         } catch (error) {
             res.status(500).send(error)
         }

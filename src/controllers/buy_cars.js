@@ -20,6 +20,7 @@ const SendMail = {
         console.log(req.body)
         let  getInfoCars
         if (req.body.carId) {
+
             try {
                 getInfoCars = await autos.getCarsForEmail(req.body.carId)
             } catch (error) {
@@ -31,6 +32,7 @@ const SendMail = {
         }
        
           console.log(getInfoCars)
+
         
         const infoCars = getInfoCars[0]
         const infoUser = req.body
