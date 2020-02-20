@@ -37,7 +37,7 @@ const Cars = {
             //get all url images for a car
 
             send = await Images.getImagesCars(copyCars)
-            console.log(send)
+           
             Object.assign(response, {
                 data: send,
                 status: 200
@@ -62,7 +62,7 @@ const Cars = {
             //get all url images for a car
 
             send = await Images.getImagesCars(copyCars)
-            console.log(send)
+            
             Object.assign(response, {
                 data: send,
                 status: 200
@@ -88,8 +88,8 @@ const Cars = {
     //filter by marc,year and model
     carsFilter: async (req, res, next) => {
 
-        let { marca, anno, color } = req.body
-        console.log(marca, anno, color)
+        let { marca, anno, color,modelo } = req.body
+        
         let response = {}
         let filterBy = query + " AND"
         let count = 0
@@ -108,6 +108,12 @@ const Cars = {
             }
             filterBy = filterBy + ` coloresautos.nombrecolorauto = '${color}'`
 
+        }if (modelo) {
+            if (count > 0) {
+                filterBy = filterBy + "AND"
+            }
+            filterBy = filterBy + ` modelosautos.nombremodeloauto = '${modelo}'`
+
         }
         try {
             const cars = await pool.query(filterBy);
@@ -124,22 +130,30 @@ const Cars = {
     },
     //get params for filters
     getFiltersParams: async (req, res) => {
-        console.log("i am here")
+        
         try {
 
             let marca = await pool.query("SELECT marcasautos.nombremarca FROM  marcasautos GROUP BY marcasautos.nombremarca")
             let color = await pool.query("SELECT coloresautos.nombrecolorauto FROM  coloresautos GROUP BY coloresautos.nombrecolorauto")
             let anno = await pool.query("SELECT versionesautos.anno FROM  versionesautos GROUP BY versionesautos.anno")
+            let modelo = await pool.query("SELECT modelosautos.nombremodeloauto FROM  modelosautos GROUP BY modelosautos.nombremodeloauto")
             marca = marca.rows
             color = color.rows
             anno = anno.rows
+            modelo = modelo.rows
             const send = {
                 marca,
                 color,
-                anno
+                anno,
+                modelo
             }
+            let response = {}
+            Object.assign(response, {
+                data: send,
+                status: 200
+            })
 
-            res.json(send)
+            res.json(response)
         } catch (error) {
             res.status(500).send(error)
         }
@@ -149,7 +163,7 @@ const Images = {
     getImagesCars: async function (copyCars) {
         let send = []
         let carWithUrls
-        console.log("here")
+        
         for (let index = 0; index < copyCars.rows.length; index++) {
             const element = copyCars.rows[index].id;
             //query tramites for a car

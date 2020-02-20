@@ -6,281 +6,90 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title></title>
+    <link rel="stylesheet" href="bootstrap-4.4.1-dist/css/bootstrap.min.css" >
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
 
-<body>
-    <div style="background:#ffffff;background-color:#ffffff;Margin:0px auto;max-width:600px;">
-        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:#ffffff;background-color:#ffffff;width:100%;">
-            <tbody>
-                <tr>
-                    <td style="direction:ltr;font-size:0px;padding:20px 0;padding-bottom:0px;padding-left:0px;padding-right:0px;padding-top:0px;text-align:center;vertical-align:top;">
-
-                        <div class="mj-column-per-100 outlook-group-fix" style="font-size:13px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
-                            <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;"
-                                width="100%">
-                                <tr>
-                                    <td style="font-size:0px;padding:10px 25px;padding-top:0px;padding-right:0px;padding-bottom:40px;padding-left:0px;word-break:break-word;">
-                                        <p style="border-top:solid 7px #DEDEDE;font-size:1;margin:0px auto;width:100%;">
-                                        </p>
-
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td align="center" style="font-size:0px;padding:10px 25px;padding-top:0px;padding-bottom:0px;word-break:break-word;">
-                                        <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:collapse;border-spacing:0px;">
-                                            <tbody>
-                                                <tr>
-                                                    <td style="width:110px;">
-                                                        <img alt="" height="auto" src="https://image.flaticon.com/icons/png/512/57/57123.png"
-                                                            title="" width="110" />
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div style="background:#ffffff;background-color:#ffffff;Margin:0px auto;max-width:600px;">
-        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:#ffffff;background-color:#ffffff;width:100%;">
-            <tbody>
-                <tr>
-                    <td style="direction:ltr;font-size:0px;padding:20px 0;padding-bottom:0px;padding-top:0px;text-align:center;vertical-align:top;">
-
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div style="background:#ffffff;background-color:#ffffff;Margin:0px auto;max-width:600px;">
-        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:#ffffff;background-color:#ffffff;width:100%;">
-            <tbody>
-                <tr>
-                    <td style="direction:ltr;font-size:0px;padding:20px 0px 20px 0px;padding-bottom:70px;padding-top:30px;text-align:center;vertical-align:top;">
-
-                        <div class="mj-column-per-100 outlook-group-fix" style="font-size:13px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
-                            <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;"
-                                width="100%">
-                                <tr>
-                                    <td align="left" style="font-size:0px;padding:0px 25px 0px 25px;padding-top:0px;padding-right:50px;padding-bottom:0px;padding-left:50px;word-break:break-word;">
-                                        <div style="font-family:Open Sans, Helvetica, Arial, sans-serif;font-size:13px;line-height:22px;text-align:left;color:#797e82;">
-                                            <h1 style="text-align:center; color: #000000; line-height:32px">Hola {{user.name}}
-                                    </h1>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td align="left" style="font-size:0px;padding:0px 25px 0px 25px;padding-top:0px;padding-right:50px;padding-bottom:0px;padding-left:50px;word-break:break-word;">
-                                        <div style="font-family:Open Sans, Helvetica, Arial, sans-serif;font-size:13px;line-height:22px;text-align:left;color:#797e82;">
-                                            <p style="margin: 10px 0; text-align: center;">Gracias por contactar con nosotros para la venta de su auto.&nbsp;</p>
-                                            <p style="margin: 10px 0; text-align: center;">Los datos de su auto son los siguentes</p>
-
-                                                <p style="margin: 10px 0; text-align: center;">Marca:  <span class="conten-span">{{auto.marca}}</span></p>
-                                                <p style="margin: 10px 0; text-align: center;">Modelo:  <span class="conten-span">{{auto.model}}</span></p>
-                                                <p style="margin: 10px 0; text-align: center;">Version:  <span class="conten-span">{{auto.version}}</span></p>
-                                                <p style="margin: 10px 0; text-align: center;">Color:  <span class="conten-span">{{auto.color}}</span></p>
-                                                <p style="margin: 10px 0; text-align: center;">Kms recorridos:  <span class="conten-span">{{auto.kms}}</span></p>
-                                                <img src={{image}} style= "max-width: 300px; max-height:300px">
+<body>    
+    <body class="bg-light">
+        <div class="container">
+      <div class="py-5 text-center">
+        <img class="d-block mx-auto mb-4" src="logo-gris.png" alt="" width="auto" height="auto">
+        <h2>Hola {{infoUser.name}}</h2>
+        <p class="lead">Usted ha realizado el contacto para vender su auto,sus datos son los siguientes</p>
+      </div>
     
-                                        </div>
-                                    </td>
-                                </tr>                                
-                            </table>
-                        </div>
-
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+      <div class="row">
+        
+        <div class="col order-md-1 d-flex justify-content-center">          
+          <form class="needs-validation" novalidate="">
+            <h4 class="mb-4 ml-5 justify-content-center">Informacion del cliente</h4>
+            
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                  <dt>Marca</dt>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <dd >{{infoCars.marca}}</dd>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <dt>Modelo</dt>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <dd >{{infoCars.modelo}}</dd>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <dt>Version</dt>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <dd >{{infoCars.nombreversionauto}}</dd>
+                </div>
+              </div>
+    
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <dt>Color</dt>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <dd >{{infoCars.nombrecolorauto}}</dd>
+                </div>
+              </div>
+    
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <dt>Kms recorridos</dt>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <dd >{{infoUser.kms}}</dd>
+                </div>
+              </div>
+            
+              
+            
+            
+            
+            
+            
+    
+      <footer class="my-5 pt-5 text-muted text-center text-small">
+        <p class="mb-1">© 2017-2019 RN2</p>
+        <ul class="list-inline">
+          <li class="list-inline-item"><a href="#">www.rn2.mx</a></li>
+          
+        </ul>
+      </footer>
     </div>
-
-    <div style="Margin:0px auto;max-width:600px;">
-        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;">
-            <tbody>
-                <tr>
-                    <td style="direction:ltr;font-size:0px;padding:20px 0px 20px 0px;padding-bottom:0px;padding-top:20px;text-align:center;vertical-align:top;">
-
-                        <div class="mj-column-per-100 outlook-group-fix" style="font-size:13px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
-                            <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;"
-                                width="100%">
-                                <tr>
-                                    <td align="center" style="font-size:0px;padding:10px 25px;padding-bottom:0px;word-break:break-word;">
-
-                                        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
-                                            style="float:none;display:inline-table;">
-                                            <tr>
-                                                <td style="padding:4px;">
-                                                    <table border="0" cellpadding="0" cellspacing="0" role="presentation"
-                                                        style="background:#DEDEDE;border-radius:6px;width:30;">
-                                                        <tr>
-                                                            <td style="font-size:0;height:30;vertical-align:middle;width:30;">
-                                                                <a href="[[SHORT_PERMALINK]]" target="_blank">
-                                                                    <img height="30" src="http://www.mailjet.com/saas-templates-creator/static/img/facebook_black.png"
-                                                                        style="border-radius:6px;" width="30" />
-                                                                </a>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </td>
-                                            </tr>
-                                        </table>
-
-                                        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
-                                            style="float:none;display:inline-table;">
-                                            <tr>
-                                                <td style="padding:4px;">
-                                                    <table border="0" cellpadding="0" cellspacing="0" role="presentation"
-                                                        style="background:#DEDEDE;border-radius:6px;width:30;">
-                                                        <tr>
-                                                            <td style="font-size:0;height:30;vertical-align:middle;width:30;">
-                                                                <a href="[[SHORT_PERMALINK]]" target="_blank">
-                                                                    <img height="30" src="http://www.mailjet.com/saas-templates-creator/static/img/twitter_black.png"
-                                                                        style="border-radius:6px;" width="30" />
-                                                                </a>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </td>
-                                            </tr>
-                                        </table>
-
-                                        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
-                                            style="float:none;display:inline-table;">
-                                            <tr>
-                                                <td style="padding:4px;">
-                                                    <table border="0" cellpadding="0" cellspacing="0" role="presentation"
-                                                        style="background:#DEDEDE;border-radius:6px;width:30;">
-                                                        <tr>
-                                                            <td style="font-size:0;height:30;vertical-align:middle;width:30;">
-                                                                <a href="[[SHORT_PERMALINK]]" target="_blank">
-                                                                    <img height="30" src="http://www.mailjet.com/saas-templates-creator/static/img/linkedin_black.png"
-                                                                        style="border-radius:6px;" width="30" />
-                                                                </a>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </td>
-                                            </tr>
-                                        </table>
-
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td align="center" style="font-size:0px;padding:0px 20px 0px 20px;padding-top:0px;padding-bottom:0px;word-break:break-word;">
-                                        <div style="font-family:Open Sans, Helvetica, Arial, sans-serif;font-size:11px;line-height:22px;text-align:center;color:#797e82;">
-
-                                            <span style="font-size:10px">Created by&nbsp;</span><a target="_blank" rel="noopener noreferrer"
-                                                style="font-size:10px; color:inherit; text-decoration: none" href="#"><span
-                                                    style="color:#DEDEDE"><u>RN2</u></span></a></p>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    </div>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+          <script>window.jQuery || document.write('<script src="/docs/4.4/assets/js/vendor/jquery.slim.min.js"><\/script>')</script><script src="/docs/4.4/dist/js/bootstrap.bundle.min.js" integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm" crossorigin="anonymous"></script>
+            <script src="form-validation.js"></script>
+    
+    </body>
+      
 </body>
-<style type="text/css">
-    #outlook a {
-        padding: 0;
-    }
 
-    .ReadMsgBody {
-        width: 100%;
-    }
-
-    .conten-span{font-size: 1.2em}
-
-    .ExternalClass {
-        width: 100%;
-    }
-
-    .ExternalClass * {
-        line-height: 100%;
-    }
-
-    body {
-        margin: 0;
-        padding: 0;
-        -webkit-text-size-adjust: 100%;
-        -ms-text-size-adjust: 100%;
-    }
-
-    table,
-    td {
-        border-collapse: collapse;
-        mso-table-lspace: 0pt;
-        mso-table-rspace: 0pt;
-    }
-
-    img {
-        border: 0;
-        height: auto;
-        line-height: 100%;
-        outline: none;
-        text-decoration: none;
-        -ms-interpolation-mode: bicubic;
-    }
-
-    p {
-        display: block;
-        margin: 13px 0;
-    }
-</style>
-<!--[if !mso]><!-->
-<style type="text/css">
-    @media only screen and (max-width:480px) {
-        @-ms-viewport {
-            width: 320px;
-        }
-
-        @viewport {
-            width: 320px;
-        }
-    }
-</style>
-<style type="text/css">
-    @import url(https: //fonts.googleapis.com/css?family=Open Sans);
-</style>
-<!--<![endif]-->
-<style type="text/css">
-    @media only screen and (min-width:480px) {
-        .mj-column-per-100 {
-            width: 100% !important;
-            max-width: 100%;
-        }
-    }
-</style>
-<style type="text/css">
-    [owa] .mj-column-per-100 {
-        width: 100% !important;
-        max-width: 100%;
-    }
-</style>
-<style type="text/css">
-    @media only screen and (max-width:480px) {
-        table.full-width-mobile {
-            width: 100% !important;
-        }
-
-        td.full-width-mobile {
-            width: auto !important;
-        }
-    }
-</style>
 
 </html>

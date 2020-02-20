@@ -82,14 +82,15 @@ Recive
 Envia un correo al usuario y a la empresa(correo por definir) con los datos anteriores
 ----------------------------------------------------Filtros--------------------------------------------
 GET localhost:4000/api/car/getFiltersParams
-Responde un listado de las marcas,annos y colores de los autos para hacer los filtros
+Responde un listado de las marcas,annos,modelos y colores de los autos para hacer los filtros
 
 GET localhost:4000/api/car/carsFilter
 Recive 
 {
     marca,
     anno,
-    color
+    color,
+    modelo
 }
 Devuelve un filtro con los datos de los autos
 
